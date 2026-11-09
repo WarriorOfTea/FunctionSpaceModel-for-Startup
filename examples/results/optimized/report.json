@@ -1,0 +1,253 @@
+{
+  "synthetic": true,
+  "description": "Полностью условный пример для проверки метода; не данные реального стартапа. Денежная единица — рубль.",
+  "configuration": {
+    "months": 36,
+    "profit_window_months": 12,
+    "initial_customers": 100,
+    "initial_cash": 2500000,
+    "cash_reserve": 500000,
+    "fixed_monthly_cost": 160000,
+    "service_cost_per_customer": 100,
+    "capacity": 5000,
+    "reference_price": 1000,
+    "advertising_scale": 100000,
+    "target_profit": 10000000,
+    "prices": [
+      600,
+      1000,
+      1400
+    ],
+    "marketing_budgets": [
+      0,
+      75000,
+      150000
+    ],
+    "scenarios": [
+      {
+        "name": "conservative",
+        "acquisition_per_currency": 0.00065,
+        "base_churn": 0.06,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      },
+      {
+        "name": "base",
+        "acquisition_per_currency": 0.00085,
+        "base_churn": 0.04,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      },
+      {
+        "name": "favorable",
+        "acquisition_per_currency": 0.0011,
+        "base_churn": 0.025,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      }
+    ],
+    "description": "Полностью условный пример для проверки метода; не данные реального стартапа. Денежная единица — рубль.",
+    "synthetic": true
+  },
+  "mode": "maximin_fixed_plan",
+  "scope": "Listed fixed response models and monthly action grid only; no probabilities",
+  "solver_status": "optimal_within_tolerance",
+  "solver_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+  "scenario_names": [
+    "conservative",
+    "base",
+    "favorable"
+  ],
+  "months": 36,
+  "profit_window_start_month": 25,
+  "profit_window_months": 12,
+  "target_profit": 10000000,
+  "target_status": "met_by_verified_plan_for_listed_models",
+  "verified_plan_profit_lower_bound": 15989487.629955648,
+  "numerical_profit_upper_bound_on_grid": 15989487.629955648,
+  "solver_relative_gap": 0.0,
+  "verified_absolute_gap": 0.0,
+  "elapsed_seconds": 15.172825122019276,
+  "cash_verification_tolerance": 0.01,
+  "simulations": [
+    {
+      "scenario": "conservative",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 15989487.629955648,
+      "final_customers": 874.1367372874241,
+      "final_cash": 23233257.15498817,
+      "minimum_cash": 1352132.5493291346,
+      "required_initial_cash_for_this_plan": 1647867.4506708654,
+      "violation": null
+    },
+    {
+      "scenario": "base",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 29446336.15508741,
+      "final_customers": 1730.970468093616,
+      "final_cash": 41751896.161660634,
+      "minimum_cash": 1552550.5291148105,
+      "required_initial_cash_for_this_plan": 1447449.4708851895,
+      "violation": null
+    },
+    {
+      "scenario": "favorable",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 48645304.36618452,
+      "final_customers": 3066.1527314051177,
+      "final_cash": 67419377.43606694,
+      "minimum_cash": 1679068.5855194852,
+      "required_initial_cash_for_this_plan": 1320931.4144805148,
+      "violation": null
+    }
+  ],
+  "plan": [
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 600,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 150000
+    },
+    {
+      "price": 1400,
+      "marketing": 75000
+    },
+    {
+      "price": 1400,
+      "marketing": 75000
+    },
+    {
+      "price": 1400,
+      "marketing": 0
+    },
+    {
+      "price": 1400,
+      "marketing": 0
+    },
+    {
+      "price": 1400,
+      "marketing": 0
+    }
+  ]
+}

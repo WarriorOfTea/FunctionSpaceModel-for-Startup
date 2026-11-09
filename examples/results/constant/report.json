@@ -1,0 +1,709 @@
+{
+  "synthetic": true,
+  "description": "Полностью условный пример для проверки метода; не данные реального стартапа. Денежная единица — рубль.",
+  "configuration": {
+    "months": 36,
+    "profit_window_months": 12,
+    "initial_customers": 100,
+    "initial_cash": 2500000,
+    "cash_reserve": 500000,
+    "fixed_monthly_cost": 160000,
+    "service_cost_per_customer": 100,
+    "capacity": 5000,
+    "reference_price": 1000,
+    "advertising_scale": 100000,
+    "target_profit": 10000000,
+    "prices": [
+      600,
+      1000,
+      1400
+    ],
+    "marketing_budgets": [
+      0,
+      75000,
+      150000
+    ],
+    "scenarios": [
+      {
+        "name": "conservative",
+        "acquisition_per_currency": 0.00065,
+        "base_churn": 0.06,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      },
+      {
+        "name": "base",
+        "acquisition_per_currency": 0.00085,
+        "base_churn": 0.04,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      },
+      {
+        "name": "favorable",
+        "acquisition_per_currency": 0.0011,
+        "base_churn": 0.025,
+        "acquisition_price_elasticity": 1.2,
+        "churn_price_elasticity": 1.0
+      }
+    ],
+    "description": "Полностью условный пример для проверки метода; не данные реального стартапа. Денежная единица — рубль.",
+    "synthetic": true
+  },
+  "mode": "exhaustive_constant_plan_comparison",
+  "scope": "Only constant actions from the configured grid and listed models",
+  "constant_plans_checked": 9,
+  "constant_plans_feasible_in_all_models": 5,
+  "best_constant_plan": {
+    "price": 1000,
+    "marketing": 150000,
+    "feasible_in_all_models": true,
+    "worst_profit": 4863314.879183838,
+    "models": [
+      {
+        "scenario": "conservative",
+        "feasible": true,
+        "completed_months": 36,
+        "window_profit": 4863314.879183838,
+        "final_customers": 896.4243589056889,
+        "final_cash": 10342512.946885653,
+        "minimum_cash": 1465278.0664442382,
+        "required_initial_cash_for_this_plan": 1534721.9335557618,
+        "violation": null
+      },
+      {
+        "scenario": "base",
+        "feasible": true,
+        "completed_months": 36,
+        "window_profit": 10666829.218719667,
+        "final_customers": 1522.2449511203556,
+        "final_cash": 21182661.269754443,
+        "minimum_cash": 1668506.6637033718,
+        "required_initial_cash_for_this_plan": 1331493.3362966282,
+        "violation": null
+      },
+      {
+        "scenario": "favorable",
+        "feasible": true,
+        "completed_months": 36,
+        "window_profit": 19041120.751428604,
+        "final_customers": 2451.362109834587,
+        "final_cash": 36167936.512385905,
+        "minimum_cash": 1779847.3583601047,
+        "required_initial_cash_for_this_plan": 1220152.6416398953,
+        "violation": null
+      }
+    ]
+  },
+  "constant_plans": [
+    {
+      "price": 600,
+      "marketing": 0,
+      "feasible_in_all_models": false,
+      "worst_profit": null,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": false,
+          "completed_months": 16,
+          "window_profit": null,
+          "final_customers": 55.62019952246919,
+          "final_cash": 534196.2175047176,
+          "minimum_cash": 374196.21750471764,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 17,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 374196.21750471764,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "base",
+          "feasible": false,
+          "completed_months": 16,
+          "window_profit": null,
+          "final_customers": 67.79490908487146,
+          "final_cash": 594836.8486076131,
+          "minimum_cash": 434836.8486076131,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 17,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 434836.8486076131,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "favorable",
+          "feasible": false,
+          "completed_months": 16,
+          "window_profit": null,
+          "final_customers": 78.51989098440428,
+          "final_cash": 645263.5793453923,
+          "minimum_cash": 485263.5793453923,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 17,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 485263.5793453923,
+            "limit": 500000
+          }
+        }
+      ]
+    },
+    {
+      "price": 600,
+      "marketing": 75000,
+      "feasible_in_all_models": true,
+      "worst_profit": 4478682.310566804,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 4478682.310566804,
+          "final_customers": 1393.5880520119406,
+          "final_cash": 9084789.636640163,
+          "minimum_cash": 1563382.0029122387,
+          "required_initial_cash_for_this_plan": 1436617.9970877613,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 8391262.495327525,
+          "final_customers": 2174.4736736751374,
+          "final_cash": 16133499.452613784,
+          "minimum_cash": 1740901.0591594349,
+          "required_initial_cash_for_this_plan": 1259098.9408405651,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 13625009.444087029,
+          "final_customers": 3236.9402475259617,
+          "final_cash": 25356971.497949958,
+          "minimum_cash": 1850049.3619635317,
+          "required_initial_cash_for_this_plan": 1149950.6380364683,
+          "violation": null
+        }
+      ]
+    },
+    {
+      "price": 600,
+      "marketing": 150000,
+      "feasible_in_all_models": false,
+      "worst_profit": null,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 8104551.464966631,
+          "final_customers": 2264.7732184290344,
+          "final_cash": 15348320.989999149,
+          "minimum_cash": 1352132.5493291346,
+          "required_initial_cash_for_this_plan": 1647867.4506708654,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 14453909.570800751,
+          "final_customers": 3533.8080270401006,
+          "final_cash": 26759469.577373978,
+          "minimum_cash": 1552550.5291148105,
+          "required_initial_cash_for_this_plan": 1447449.4708851895,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": false,
+          "completed_months": 35,
+          "window_profit": null,
+          "final_customers": 5154.294065224005,
+          "final_cash": 39510424.68945492,
+          "minimum_cash": 1679068.5855194852,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 36,
+            "stage": "capacity",
+            "message": "Paying base exceeds service capacity",
+            "value": 5076.979654245645,
+            "limit": 5000
+          }
+        }
+      ]
+    },
+    {
+      "price": 1000,
+      "marketing": 0,
+      "feasible_in_all_models": false,
+      "worst_profit": null,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": false,
+          "completed_months": 18,
+          "window_profit": null,
+          "final_customers": 32.832304338101125,
+          "final_cash": 567064.5088327737,
+          "minimum_cash": 407064.50883277366,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 19,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 407064.50883277366,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "base",
+          "feasible": false,
+          "completed_months": 19,
+          "window_profit": null,
+          "final_customers": 46.04192019577161,
+          "final_cash": 625494.5237713325,
+          "minimum_cash": 465494.52377133246,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 20,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 465494.52377133246,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "favorable",
+          "feasible": false,
+          "completed_months": 21,
+          "window_profit": null,
+          "final_customers": 58.76204882136227,
+          "final_cash": 587452.0863701833,
+          "minimum_cash": 427452.0863701833,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 22,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 427452.0863701833,
+            "limit": 500000
+          }
+        }
+      ]
+    },
+    {
+      "price": 1000,
+      "marketing": 75000,
+      "feasible_in_all_models": true,
+      "worst_profit": 2487328.820447669,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 2487328.820447669,
+          "final_customers": 551.6786542931425,
+          "final_cash": 6135294.28160801,
+          "minimum_cash": 1701002.0489171827,
+          "required_initial_cash_for_this_plan": 1298997.9510828173,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 6088865.423954337,
+          "final_customers": 938.6502471776558,
+          "final_cash": 12913519.780342298,
+          "minimum_cash": 1883663.6896413695,
+          "required_initial_cash_for_this_plan": 1116336.3103586305,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 11276103.541097166,
+          "final_customers": 1512.7920059209587,
+          "final_cash": 22235356.65204628,
+          "minimum_cash": 1977423.9126931387,
+          "required_initial_cash_for_this_plan": 1022576.0873068613,
+          "violation": null
+        }
+      ]
+    },
+    {
+      "price": 1000,
+      "marketing": 150000,
+      "feasible_in_all_models": true,
+      "worst_profit": 4863314.879183838,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 4863314.879183838,
+          "final_customers": 896.4243589056889,
+          "final_cash": 10342512.946885653,
+          "minimum_cash": 1465278.0664442382,
+          "required_initial_cash_for_this_plan": 1534721.9335557618,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 10666829.218719667,
+          "final_customers": 1522.2449511203556,
+          "final_cash": 21182661.269754443,
+          "minimum_cash": 1668506.6637033718,
+          "required_initial_cash_for_this_plan": 1331493.3362966282,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 19041120.751428604,
+          "final_customers": 2451.362109834587,
+          "final_cash": 36167936.512385905,
+          "minimum_cash": 1779847.3583601047,
+          "required_initial_cash_for_this_plan": 1220152.6416398953,
+          "violation": null
+        }
+      ]
+    },
+    {
+      "price": 1400,
+      "marketing": 0,
+      "feasible_in_all_models": false,
+      "worst_profit": null,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": false,
+          "completed_months": 19,
+          "window_profit": null,
+          "final_customers": 18.88052210376228,
+          "final_cash": 609965.1699861895,
+          "minimum_cash": 449965.16998618946,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 20,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 449965.16998618946,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "base",
+          "feasible": false,
+          "completed_months": 22,
+          "window_profit": null,
+          "final_customers": 28.143873790960363,
+          "final_cash": 554675.6800666675,
+          "minimum_cash": 394675.6800666675,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 23,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 394675.6800666675,
+            "limit": 500000
+          }
+        },
+        {
+          "scenario": "favorable",
+          "feasible": false,
+          "completed_months": 25,
+          "window_profit": null,
+          "final_customers": 41.03768311308225,
+          "final_cash": 613377.9009896639,
+          "minimum_cash": 453377.9009896639,
+          "required_initial_cash_for_this_plan": null,
+          "violation": {
+            "month": 26,
+            "stage": "cash_upfront",
+            "message": "Reserve breached before receipts",
+            "value": 453377.9009896639,
+            "limit": 500000
+          }
+        }
+      ]
+    },
+    {
+      "price": 1400,
+      "marketing": 75000,
+      "feasible_in_all_models": true,
+      "worst_profit": 1099691.7837657824,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 1099691.7837657824,
+          "final_customers": 281.1440210191303,
+          "final_cash": 3868928.3166898806,
+          "minimum_cash": 1784922.648259527,
+          "required_initial_cash_for_this_plan": 1215077.351740473,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 4251461.584525505,
+          "final_customers": 508.5547826312074,
+          "final_cash": 10147044.28481259,
+          "minimum_cash": 2001449.5642220024,
+          "required_initial_cash_for_this_plan": 998550.4357779976,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 9163511.064842546,
+          "final_customers": 876.5337355599833,
+          "final_cash": 19250550.43195286,
+          "minimum_cash": 2076237.368746161,
+          "required_initial_cash_for_this_plan": 923762.631253839,
+          "violation": null
+        }
+      ]
+    },
+    {
+      "price": 1400,
+      "marketing": 150000,
+      "feasible_in_all_models": true,
+      "worst_profit": 2626310.32125503,
+      "models": [
+        {
+          "scenario": "conservative",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 2626310.32125503,
+          "final_customers": 457.6252632891325,
+          "final_cash": 6568320.2819731925,
+          "minimum_cash": 1537046.2970292745,
+          "required_initial_cash_for_this_plan": 1462953.7029707255,
+          "violation": null
+        },
+        {
+          "scenario": "base",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 7683636.928593168,
+          "final_customers": 824.6804046563359,
+          "final_cash": 16491686.135942286,
+          "minimum_cash": 1770036.9028423075,
+          "required_initial_cash_for_this_plan": 1229963.0971576925,
+          "violation": null
+        },
+        {
+          "scenario": "favorable",
+          "feasible": true,
+          "completed_months": 36,
+          "window_profit": 15563320.177365463,
+          "final_customers": 1417.5232329935468,
+          "final_cash": 30967729.91459677,
+          "minimum_cash": 1873693.015358495,
+          "required_initial_cash_for_this_plan": 1126306.984641505,
+          "violation": null
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    },
+    {
+      "price": 1000,
+      "marketing": 150000
+    }
+  ],
+  "simulations": [
+    {
+      "scenario": "conservative",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 4863314.879183838,
+      "final_customers": 896.4243589056889,
+      "final_cash": 10342512.946885653,
+      "minimum_cash": 1465278.0664442382,
+      "required_initial_cash_for_this_plan": 1534721.9335557618,
+      "violation": null
+    },
+    {
+      "scenario": "base",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 10666829.218719667,
+      "final_customers": 1522.2449511203556,
+      "final_cash": 21182661.269754443,
+      "minimum_cash": 1668506.6637033718,
+      "required_initial_cash_for_this_plan": 1331493.3362966282,
+      "violation": null
+    },
+    {
+      "scenario": "favorable",
+      "feasible": true,
+      "completed_months": 36,
+      "window_profit": 19041120.751428604,
+      "final_customers": 2451.362109834587,
+      "final_cash": 36167936.512385905,
+      "minimum_cash": 1779847.3583601047,
+      "required_initial_cash_for_this_plan": 1220152.6416398953,
+      "violation": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "description": "Полностью условный пример для проверки метода; не данные реального стартапа. Денежная единица — рубль.",
+  "synthetic": true,
+  "months": 36,
+  "profit_window_months": 12,
+  "initial_customers": 100,
+  "initial_cash": 2500000,
+  "cash_reserve": 500000,
+  "fixed_monthly_cost": 160000,
+  "service_cost_per_customer": 100,
+  "capacity": 5000,
+  "reference_price": 1000,
+  "advertising_scale": 100000,
+  "target_profit": 10000000,
+  "prices": [600, 1000, 1400],
+  "marketing_budgets": [0, 75000, 150000],
+  "scenarios": [
+    {"name": "conservative", "acquisition_per_currency": 0.00065, "base_churn": 0.06},
+    {"name": "base", "acquisition_per_currency": 0.00085, "base_churn": 0.04},
+    {"name": "favorable", "acquisition_per_currency": 0.0011, "base_churn": 0.025}
+  ]
+}

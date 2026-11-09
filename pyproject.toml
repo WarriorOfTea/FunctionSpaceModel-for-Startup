@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "function-space-model"
+version = "0.1.0"
+description = "Monthly subscription-business reachability research prototype"
+requires-python = ">=3.11"
+dependencies = ["scipy>=1.14,<2"]
+
+[project.scripts]
+fsm = "function_space_model.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
