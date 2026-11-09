@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "function-space-model"
 version = "0.1.0"
-description = "Monthly subscription-business reachability research prototype"
+description = "Continuous variational and monthly subscription-business research prototypes"
 requires-python = ">=3.11"
 dependencies = ["scipy>=1.14,<2"]
 

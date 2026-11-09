@@ -2,7 +2,7 @@
 
 import argparse
 import csv
-from dataclasses import asdict, fields
+from dataclasses import asdict, fields, replace
 import json
 from pathlib import Path
 
@@ -29,7 +29,7 @@ def _write_outputs(directory: Path, report: dict, simulations):
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="Месячная модель подписочного сервиса")
+    parser = argparse.ArgumentParser(description="Исследовательские модели подписочного сервиса")
     commands = parser.add_subparsers(dest="command", required=True)
     search = commands.add_parser("optimize", help="Найти план на сетке цен и бюджетов")
     search.add_argument("config", type=Path)
@@ -44,8 +44,19 @@ def main(argv=None) -> int:
     compare = commands.add_parser("compare-constant", help="Перебрать постоянные цены и бюджеты на сетке")
     compare.add_argument("config", type=Path)
     compare.add_argument("--output-dir", type=Path, required=True)
+    continuous = commands.add_parser("variational", help="Найти непрерывный путь с квадратичным штрафом")
+    continuous.add_argument("config", type=Path)
+    continuous.add_argument("--segments", type=int, default=3)
+    continuous.add_argument("--coordinate", choices=("absolute", "relative"), default="absolute")
+    continuous.add_argument("--quality-weight", type=float)
+    continuous.add_argument("--starts", type=int, default=3)
+    continuous.add_argument("--maxiter", type=int, default=400)
+    continuous.add_argument("--stress", action="store_true")
+    continuous.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
+        if args.command == "variational":
+            return _continuous_command(args)
         config = ModelConfig.from_file(args.config)
         if args.command == "optimize":
             from .optimizer import optimize
@@ -73,3 +84,43 @@ def main(argv=None) -> int:
                       if k not in ("plan", "solver_message", "configuration", "constant_plans")},
                      ensure_ascii=False, indent=2, allow_nan=False))
     return exit_code
+
+
+def _continuous_command(args):
+    from .variational import ContinuousPlan, Disturbance, VariationalConfig, optimize_continuous, replay
+    config = VariationalConfig.from_file(args.config)
+    if args.quality_weight is not None:
+        config = replace(config, quality_weight=args.quality_weight)
+    report, rows = optimize_continuous(config, segments=args.segments, coordinate=args.coordinate,
+                                      starts=args.starts, maxiter=args.maxiter)
+    output_rows = [{"scenario": "nominal", **row} for row in rows]
+    report["stress_checks"] = []
+    if args.stress and report["plan"] is not None:
+        plan = ContinuousPlan(**report["plan"])
+        events = (Disturbance("development_delay", development_delay=config.years / 12),
+                  Disturbance("service_outage", outage_start=config.years / 2,
+                              outage_duration=config.years / 36,
+                              extra_churn_hazard=1., repair_cost=100_000.))
+        for event in events:
+            summary, event_rows = replay(config, plan, event)
+            report["stress_checks"].append(summary)
+            output_rows.extend({"scenario": event.name, **row} for row in event_rows)
+    directory = args.output_dir
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / "report.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    plan_file = directory / "plan.json"
+    if report["plan"] is not None:
+        plan_file.write_text(json.dumps(report["plan"], indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    elif plan_file.exists():
+        plan_file.unlink()
+    with (directory / "trajectory.csv").open("w", encoding="utf-8", newline="") as stream:
+        keys = ["scenario", "time_years", "customers", "quality", "price_per_year", "cash",
+                "marketing_per_year", "development_per_year"]
+        writer = csv.DictWriter(stream, fieldnames=keys, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(output_rows)
+    print(json.dumps({key: value for key, value in report.items()
+                      if key not in ("plan", "attempts", "configuration")},
+                     ensure_ascii=False, indent=2, allow_nan=False))
+    return 0 if report["plan"] is not None else 2
