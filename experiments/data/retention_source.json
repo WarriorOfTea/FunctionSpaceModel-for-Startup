@@ -1,0 +1,11 @@
+{
+  "title": "How to Project Customer Retention",
+  "authors": ["Peter S. Fader", "Bruce G. S. Hardie"],
+  "year": 2007,
+  "doi": "10.1002/dir.20074",
+  "url": "https://faculty.wharton.upenn.edu/wp-content/uploads/2012/04/Fader_hardie_jim_07.pdf",
+  "location": "Table 1, journal page 78, PDF page 3",
+  "units": "Percent of original cohort surviving; period is one YEAR, not one month",
+  "provenance": "Manually transcribed numerical facts, checked against the rendered original table. The source describes an unspecified subscription-type business and refers to Berry and Linoff (2004).",
+  "limitations": "Two published cohorts with percentages rounded to 0.1 percentage point; customer counts and intervention history are unavailable. This is not our startup dataset, not a representative benchmark of all subscription businesses, and not a causal price experiment."
+}

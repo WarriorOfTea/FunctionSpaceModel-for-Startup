@@ -1,0 +1,152 @@
+{
+  "source": {
+    "title": "How to Project Customer Retention",
+    "authors": [
+      "Peter S. Fader",
+      "Bruce G. S. Hardie"
+    ],
+    "year": 2007,
+    "doi": "10.1002/dir.20074",
+    "url": "https://faculty.wharton.upenn.edu/wp-content/uploads/2012/04/Fader_hardie_jim_07.pdf",
+    "location": "Table 1, journal page 78, PDF page 3",
+    "units": "Percent of original cohort surviving; period is one YEAR, not one month",
+    "provenance": "Manually transcribed numerical facts, checked against the rendered original table. The source describes an unspecified subscription-type business and refers to Berry and Linoff (2004).",
+    "limitations": "Two published cohorts with percentages rounded to 0.1 percentage point; customer counts and intervention history are unavailable. This is not our startup dataset, not a representative benchmark of all subscription businesses, and not a causal price experiment."
+  },
+  "training_years": [
+    0,
+    7
+  ],
+  "holdout_years": [
+    8,
+    12
+  ],
+  "conditioning": "Every method starts at the observed survival at year 7",
+  "baseline_scope": "Constant-churn projection implied by the core model at fixed price and zero acquisition, calibrated here only; not a test of the full planner",
+  "estimation": "Normalized grouped censored likelihood on rounded cohort percentages; counts unavailable, no standard errors or confidence intervals claimed",
+  "cohorts": {
+    "Regular": {
+      "parameters": {
+        "constant_churn_mle": {
+          "churn": 0.22602739726027393
+        },
+        "constant_churn_latest": {
+          "churn": 0.08015267175572516
+        },
+        "shifted_beta_geometric": {
+          "alpha": 0.7040772534724667,
+          "beta": 1.1820428911164127,
+          "negative_log_likelihood_per_initial_customer": 1.680265188463287,
+          "successful_starts": 6,
+          "starts": 6
+        }
+      },
+      "metrics": {
+        "constant_churn_mle": {
+          "mae_percentage_points": 7.679097382629865,
+          "rmse_percentage_points": 8.072978514132949,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 6.693372284371042,
+          "year_12_actual_percent": 17.3,
+          "year_12_signed_error_percentage_points": -10.60662771562896,
+          "year_12_relative_error_percent": -61.30998679554311
+        },
+        "constant_churn_latest": {
+          "mae_percentage_points": 0.7117733632320405,
+          "rmse_percentage_points": 0.8560119407014104,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 15.87068963958243,
+          "year_12_actual_percent": 17.3,
+          "year_12_signed_error_percentage_points": -1.429310360417571,
+          "year_12_relative_error_percent": -8.261909597789426
+        },
+        "shifted_beta_geometric": {
+          "mae_percentage_points": 0.12855111418731358,
+          "rmse_percentage_points": 0.1315764553968823,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 17.144342398856086,
+          "year_12_actual_percent": 17.3,
+          "year_12_signed_error_percentage_points": -0.1556576011439159,
+          "year_12_relative_error_percent": -0.8997549199070284
+        }
+      }
+    },
+    "High End": {
+      "parameters": {
+        "constant_churn_mle": {
+          "churn": 0.10332927324401137
+        },
+        "constant_churn_latest": {
+          "churn": 0.05029013539651839
+        },
+        "shifted_beta_geometric": {
+          "alpha": 0.668088389124766,
+          "beta": 3.8060950576958135,
+          "negative_log_likelihood_per_initial_customer": 1.6111581473911554,
+          "successful_starts": 6,
+          "starts": 6
+        }
+      },
+      "metrics": {
+        "constant_churn_mle": {
+          "mae_percentage_points": 7.039357452705981,
+          "rmse_percentage_points": 7.613154612884201,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 28.460757237296054,
+          "year_12_actual_percent": 39.4,
+          "year_12_signed_error_percentage_points": -10.939242762703943,
+          "year_12_relative_error_percent": -27.764575539857724
+        },
+        "constant_churn_latest": {
+          "mae_percentage_points": 0.6893833294051122,
+          "rmse_percentage_points": 0.8424102881165252,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 37.93466361063679,
+          "year_12_actual_percent": 39.4,
+          "year_12_signed_error_percentage_points": -1.4653363893632088,
+          "year_12_relative_error_percent": -3.719127891784794
+        },
+        "shifted_beta_geometric": {
+          "mae_percentage_points": 1.012645430188669,
+          "rmse_percentage_points": 1.0625405868617945,
+          "holdout_points": 5,
+          "year_12_prediction_percent": 37.961772308295956,
+          "year_12_actual_percent": 39.4,
+          "year_12_signed_error_percentage_points": -1.4382276917040415,
+          "year_12_relative_error_percent": -3.6503240906193946
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "constant_churn_mle": {
+      "mae_percentage_points": 7.359227417667924,
+      "rmse_percentage_points": 7.84643566370528,
+      "points": 10,
+      "cohorts": 2
+    },
+    "constant_churn_latest": {
+      "mae_percentage_points": 0.7005783463185764,
+      "rmse_percentage_points": 0.849238345857028,
+      "points": 10,
+      "cohorts": 2
+    },
+    "shifted_beta_geometric": {
+      "mae_percentage_points": 0.5705982721879913,
+      "rmse_percentage_points": 0.7570683134114828,
+      "points": 10,
+      "cohorts": 2
+    }
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "not_measured": [
+    "Profit forecast error",
+    "Minimum-capital forecast error",
+    "Joint reserve-violation probabilities",
+    "Out-of-sample interval coverage",
+    "Policy improvement on real intervention data"
+  ]
+}
