@@ -302,6 +302,9 @@ class _Problem:
         n, q, p = self.coefficients(free)
         return ContinuousPlan(tuple(self.basis.knots), tuple(n), tuple(q), tuple(p), self.coordinate)
 
+    def additional_checks(self, plan):
+        return []
+
 
 @dataclass(frozen=True)
 class Disturbance:
@@ -440,12 +443,18 @@ def replay(config, plan, disturbance=Disturbance(), *, samples=601):
     return summary, rows
 
 
-def optimize_continuous(config, *, segments=3, coordinate="absolute", starts=3, maxiter=400):
+def optimize_continuous(config, *, segments=3, coordinate="absolute", starts=3, maxiter=400,
+                        disturbances=()):
     """Return the best independently checked candidate from deterministic starts."""
     if type(starts) is not int or not 1 <= starts <= 20 or type(maxiter) is not int or maxiter < 1:
         raise ValueError("invalid search limits")
     started = time.monotonic()
-    problem = _Problem(config, segments, coordinate)
+    disturbances = tuple(disturbances)
+    if disturbances:
+        from .scenarios import ScenarioProblem
+        problem = ScenarioProblem(config, segments, coordinate, disturbances)
+    else:
+        problem = _Problem(config, segments, coordinate)
     attempts, candidates = [], []
     for factor in np.linspace(1.1, 1.8, starts):
         seed = problem.seed(float(factor))
@@ -470,9 +479,12 @@ def optimize_continuous(config, *, segments=3, coordinate="absolute", starts=3, 
                 checked, _ = replay(config, plan)
             except ValueError:
                 break
-            if checked["minimum_cash"] < config.reserve - .025:
-                refinements.append({"cash_shortfall": config.reserve - checked["minimum_cash"]})
-                problem.add_check_times(cash=[checked["minimum_cash_time"]])
+            scenario_checks = [checked] + problem.additional_checks(plan)
+            violated_cash = [s for s in scenario_checks if s["minimum_cash"] < config.reserve - .025]
+            if violated_cash:
+                refinements.append({"cash_shortfalls": {s["name"]: config.reserve - s["minimum_cash"]
+                                                        for s in violated_cash}})
+                problem.add_check_times(cash=[s["minimum_cash_time"] for s in violated_cash])
                 seed = result.x
                 continue
             break
@@ -490,24 +502,33 @@ def optimize_continuous(config, *, segments=3, coordinate="absolute", starts=3, 
         plan = problem.plan(result.x)
         try:
             check, _ = replay(config, plan)
+            scenario_checks = problem.additional_checks(plan)
         except ValueError as error:
             attempt.update(accepted=False, validation_error=str(error))
             continue
         # Dense validation supplements the optimizer's quadrature constraints.
-        allowed = (check["feasible_cash_and_capacity"] and check["target_met"]
+        allowed = (all(s["feasible_cash_and_capacity"] and s["target_met"]
+                       for s in [check] + scenario_checks)
                    and check["maximum_customer_replay_error"] <= .01)
         attempt["accepted"] = bool(allowed)
         attempt["replay"] = check
+        if disturbances:
+            attempt["scenario_replays"] = scenario_checks
         if allowed:
             candidates.append((float(result.fun), plan, result.x))
     candidates.sort(key=lambda item: item[0])
     bound = penalty_lower_bound(config, coordinate)
-    report = {"mode": "continuous_variational", "synthetic": config.synthetic,
+    report = {"mode": "continuous_scenario_plan" if disturbances else "continuous_variational",
+              "synthetic": config.synthetic,
               "configuration": asdict(config), "coordinate": coordinate, "segments": segments,
               "status": "numerically_checked_candidate" if candidates else "no_verified_candidate",
               "global_optimality_proven": False, "analytic_lower_bound": bound,
               "attempts": attempts, "elapsed_seconds": time.monotonic() - started,
               "plan": asdict(candidates[0][1]) if candidates else None}
+    if disturbances:
+        report.update(objective_scope="nominal_path_penalty",
+                      disturbances=[asdict(d) for d in disturbances],
+                      robustness_scope="enumerated scenarios only; fixed common controls; no probabilities")
     if not candidates:
         report["interpretation"] = "Search failure is not proof of infeasibility."
         return report, []
@@ -522,4 +543,13 @@ def optimize_continuous(config, *, segments=3, coordinate="absolute", starts=3, 
                   maximum_marketing_rate=extrema["marketing"]["value"],
                   tolerances={"money": .05, "customers": .01,
                               "note": "numerical tolerances, not a formal feasibility proof"})
+    if disturbances:
+        checks = problem.additional_checks(plan)
+        predictions = problem.predictions(free)
+        report["scenario_checks"] = checks
+        report["scenario_prediction_errors"] = [
+            {"name": check["name"],
+             "final_customer_error": abs(check["final_customers"] - predicted["customers_at_boundaries"][-1]),
+             "window_profit_error": abs(check["window_profit"] - predicted["window_profit"])}
+            for check, predicted in zip(checks, predictions)]
     return report, rows

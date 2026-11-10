@@ -52,6 +52,8 @@ def main(argv=None) -> int:
     continuous.add_argument("--starts", type=int, default=3)
     continuous.add_argument("--maxiter", type=int, default=400)
     continuous.add_argument("--stress", action="store_true")
+    continuous.add_argument("--scenario-plan", action="store_true",
+                            help="Один план с целью и резервом в трёх заданных сценариях")
     continuous.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
@@ -88,22 +90,25 @@ def main(argv=None) -> int:
 
 def _continuous_command(args):
     from .variational import ContinuousPlan, Disturbance, VariationalConfig, optimize_continuous, replay
+    from .scenarios import standard_disturbances
     config = VariationalConfig.from_file(args.config)
     if args.quality_weight is not None:
         config = replace(config, quality_weight=args.quality_weight)
+    disturbances = standard_disturbances(config) if args.scenario_plan else ()
     report, rows = optimize_continuous(config, segments=args.segments, coordinate=args.coordinate,
-                                      starts=args.starts, maxiter=args.maxiter)
+                                      starts=args.starts, maxiter=args.maxiter, disturbances=disturbances)
     output_rows = [{"scenario": "nominal", **row} for row in rows]
     report["stress_checks"] = []
-    if args.stress and report["plan"] is not None:
+    if (args.stress or args.scenario_plan) and report["plan"] is not None:
         plan = ContinuousPlan(**report["plan"])
-        events = (Disturbance("development_delay", development_delay=config.years / 12),
+        events = disturbances or (Disturbance("development_delay", development_delay=config.years / 12),
                   Disturbance("service_outage", outage_start=config.years / 2,
                               outage_duration=config.years / 36,
                               extra_churn_hazard=1., repair_cost=100_000.))
         for event in events:
             summary, event_rows = replay(config, plan, event)
-            report["stress_checks"].append(summary)
+            if not args.scenario_plan:
+                report["stress_checks"].append(summary)
             output_rows.extend({"scenario": event.name, **row} for row in event_rows)
     directory = args.output_dir
     directory.mkdir(parents=True, exist_ok=True)
